@@ -84,6 +84,7 @@ rect {
 
 .icon{
     float:left;
+    padding-right:10px;
 }
 
 .subject{
@@ -98,6 +99,7 @@ rect {
     color:rgb(150, 150, 150);
     font-size:15px;
     float:left;
+    width:85%;
 }
 
 #bubble_graph{
@@ -107,6 +109,19 @@ rect {
 }
 
 #tree_graph{
+    width:1164px;
+    height:500px;
+    margin:0 auto;
+}
+
+#chicken_graph{
+    width:1164px;
+    height:500px;
+    margin:0 auto;
+}
+
+
+#coffee_graph{
     width:1164px;
     height:500px;
     margin:0 auto;
