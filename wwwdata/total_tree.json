@@ -1,0 +1,42 @@
+{
+  "name": "Total",
+  "children":[
+    {
+      "name": "커피",
+      "children":[{ "name" : "카페베네", "size":408, "color":"#BAA66D" },
+	{ "name" : "이디야", "size":300 , "color":"#E9CF88"},
+	{ "name" : "엔제리너스", "size":371, "color":"#C4AF76"},
+	{ "name" : "투썸플레이스", "size":129, "color":"#AE9968" },
+	{ "name" : "탐앤탐스", "size":265, "color":"#9C8C5D" },
+	{ "name" : "할리스", "size":264, "color":"#E9CF88" },
+	{ "name" : "파스쿠찌", "size":107, "color":"#928258" },
+	{ "name" : "카페띠아모", "size":216, "color":"#D5BD7E" }]
+    },{
+      "name": "떡볶이",
+      "children":[{ "name" : "신참떡볶이", "size":8, "color":"#87414F" },
+	{ "name" : "신전떡볶이", "size":1, "color":"#793A47" },
+	{ "name" : "요런떡볶이", "size":105, "color":"#B15667" },
+	{ "name" : "버무리떡볶이", "size":25, "color":"#A44F61" },
+	{ "name" : "국대떡볶이", "size":36, "color":"#964858" },
+	{ "name" : "동대문엽떡", "size":24, "color":"#793A47" },
+	{ "name" : "올떡", "size":323, "color":"#E46D84" },
+	{ "name" : "아딸", "size":708, "color":"#C45E72" },
+	{ "name" : "죠스떡볶이", "size":40, "color":"#D7677E" }]
+    },{
+      "name": "치킨",
+      "children":[{ "name" : "지코바양념치킨", "size":377, "color":"#567072" },
+	{ "name" : "맘스터치", "size":269, "color":"#8CB9B9" },
+	{ "name" : "맥시칸치킨", "size":489, "color":"#8EB1B0" },
+	{ "name" : "부어치킨", "size":642, "color":"#AAD4D0" },
+	{ "name" : "호식이두마리", "size":411, "color":"#496263" },
+	{ "name" : "BHC", "size":882, "color":"#B4E0DB" },
+	{ "name" : "또래오래", "size":752, "color":"#678887" },
+	{ "name" : "굽네치킨", "size":836, "color":"#6C8E8F" },
+	{ "name" : "처갓집", "size":824, "color":"#79A0A0" },
+	{ "name" : "교촌", "size":988, "color":"#739797" },
+	{ "name" : "네네", "size":953, "color":"#627F7D" },
+	{ "name" : "페리카나", "size":1338, "color":"#94C3C2" },
+	{ "name" : "BBQ", "size":1536, "color":"#A2CAC9" }]
+    }
+  ]
+}

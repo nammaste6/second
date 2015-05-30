@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/d3.v3.js" charset="utf-8"></script>
+    </head>
+    <body>
+	<div id="bubble_graph"></div>
+	<script>
+	    var c_h = 500;
+	    var c_w = 500;
+
+	    var svg = d3.select("#bubble_graph")
+			.append("svg:svg")
+			.attr("width", c_w)
+			.attr("height", c_h);
+
+	    var pack = d3.layout.pack()
+			.size([c_w, c_h])
+			.padding(10)
+
+	    var packs = [];
+
+	    for(var i = 0 ; i < 4; i++){
+		    console.log("wwwdata/coffee_pack_"+i+".json");
+		$.getJSON("wwwdata/coffee_pack_"+i+".json", function(d){
+		    packs.push(pack.nodes(d));
+		    tt.push(pack.nodes(d));
+		});
+	    }
+
+	    
+            d3.json("wwwdata/coffee_pack_0.json", function(e, d){
+	    if(e) console.warn(e);
+
+	    svg.append("text")
+	    	.attr("id", "year")
+	    	.attr("x", 50)
+		.attr("y", 30)
+		.attr("dy", "1em")
+		.attr("text-anchor", "middle")
+		.style("opacity", 1)
+		.style("font-size", "20px")
+		.text("2010");
+
+	    var circle = svg.selectAll("circle")
+		      .data(pack.nodes(d))
+		      .enter()
+	    
+	    circle.append("circle")
+		      .style("fill", function(d){ console.log(d.value);return d.parent? d.color :"white";})
+		      .attr("id", function(d){return d.name;})
+		      .attr("cx", function(d){return d.x;})
+		      .attr("cy", function(d){return d.y;})
+		      .attr("r", function(d){return d.r;});
+	    
+	    circle.append("text")
+		      .attr("class", function(d){return d.name;})
+		      .attr("x", function(d){return d.x;})
+		      .attr("y", function(d){return d.y;})
+		      .attr("dy", ".35em")
+		      .attr("text-anchor", "middle")
+	   .style("opacity", 1)
+	   .text(function(d){return d.name;});
+
+           });
+
+     	   setInterval(function(){
+		var nodeData = packs.shift();
+		if(nodeData == undefined) return;
+		redraw(nodeData);
+	   }, 2000);
+
+           function redraw(nodeData){
+		 d3.json("wwwdata/coffee_pack_0.json", function(e, d){
+			  if(e) console.warn(e);
+		  console.log("redraw");
+
+		$.each(nodeData, function(i, d){
+		
+		    var id = "#"+d.name
+		    var class_name = "."+d.name;
+		    
+		    if(i==0){
+		      d3.select("#year")
+			.transition()
+			.duration(1000)
+			.text(d.year)
+		    }
+
+		    if(i!=0){
+		      d3.select(id)
+			.transition()
+			.duration(1000)
+			.attr("cx", d.x)
+			.attr("cy", d.y)
+			.attr("r", d.r);
+		    
+		      d3.select(class_name)
+			.transition()
+			.duration(1000)
+			.attr("x", d.x)
+			.attr("y", d.y);
+		     }
+		 });
+	       });
+	   }
+	</script>
+    </body>
+</html>

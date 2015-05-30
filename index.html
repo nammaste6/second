@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="css/style.css" type="text/css" rel="stylesheet">
+        <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="js/d3.v3.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <div id="header">
+            <div id="logo">
+                <img src="images/logo.png">
+            </div>
+            <div class="menu">
+                <div id="main">
+                    Main
+                </div>
+                <div id="history">
+                    History
+                </div>
+                <div id="project">
+                    Project
+                </div>
+                <div id="aboutus">
+                    About Us
+                </div>
+            </div>
+        </div>
+	<div id="container">
+            <div id="main_contents" data-0="background-color:rgb(50,50,50);" data-500="background-color:rgb(63,210,176);">
+                <div id="outer_circle"></div>
+                <img id="main_img" src="images/main02.png">
+            </div>
+            <div id="history_contents" class="contents">
+		<img src="images/history.png"/>
+	    </div>
+            <div id="d3_contents" class="contents">
+		<img src="images/visual.png"/>
+	    </div>
+            <div id="bubble_contents" class="contents">
+		<div class="subject">
+		    <div class="icon">
+			<img src="images/bubble_icon.png"/>
+		    </div>
+		    <div style="float:left; line-height:149px;">
+			Bubble Chart 커피전문점 매장 수 변화
+		    </div>
+		    <div class="sub">
+			버블 차트는 2011~2013년 까지 변화하는 매장 수를 버블의 움직임을 통해 동적으로 표현했습니다.
+			</br>
+			<a href="http://nammaste.tistory.com/entry/Data-Visualization-1-d3%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C">
+			    개발 시작단계
+			</a>
+			</br>
+			<a href="http://nammaste.tistory.com/entry/Data-Visualization-2-d3%EB%A5%BC-%EC%82%AC%EC%9A%A9%ED%95%9C">
+			    버블차트 개발 히스토리 및 이슈
+			</a>
+			
+		    </div>
+		</div>
+		<div id="bubble_graph" >
+		<iframe src="bubble.html" width="500px" height="500px" scrolling="no">
+		</iframe>
+		</div>
+	    </div>
+            <div id="tree_contents" class="contents">
+		<div class="subject">
+		    <div class="icon" width="147px" height="147px">
+			<img src="images/tree_icon.png"/>
+		    </div>
+		    <div style="float:left; line-height:149px;">
+			Treemap 프랜차이즈 브랜드
+		    </div>
+		    <div class="sub" style="padding-bottom:50px;">
+			프랜차이즈 브랜드 트리맵은 브랜드 매장 수와 해지율을 보여주는 데이터 시각화 차트입니다. 각각의 영역은 매장의 수를 나타내며 색이 밝아질 수록 해지율이 높은 매장입니다.
+			</br>
+			<a href="http://nammaste.tistory.com/entry/Data-Visualization-3">
+			    트리맵 개발 히스토리 및 이슈
+			</a>
+			
+		    </div>
+		</div>
+		<div id="tree_graph">
+		</div>
+	    </div>
+            <div id="google_contents" class="contents">
+		<img src="images/google.png"/>
+	    </div>
+            <div id="chicken_contents" class="contents">
+	    </div>
+            <div id="coffee_contents" class="contents">
+	    </div>
+	</div>
+	<script type="text/javascript" src="js/skrollr.min.js"></script>
+	<script>
+	    var s = skrollr.init();
+	</script>
+	<script>
+		var w = 1164 - 80,
+		h = 500 - 80,
+		x = d3.scale.linear().range([0, w]),
+		y = d3.scale.linear().range([0, h]),
+		color = d3.scale.category20c(),
+		root,
+		node;
+
+		var treemap = d3.layout.treemap()
+		    .round(false)
+		    .size([w, h])
+		    .sticky(true)
+		    .value(function(d) { return d.size; });
+        
+		var svg = d3.select("#tree_graph")
+		    .attr("class", "chart")
+		    .style("width", w + "px")
+		    .style("height", h + "px")
+		  .append("svg:svg")
+		    .attr("width", w)
+		    .attr("height", h)
+		  .append("svg:g")
+		    .attr("transform", "translate(.5,.5)");
+        
+		d3.json("wwwdata/total_tree.json", function(data) {
+		  node = root = data;
+        
+		  var nodes = treemap.nodes(root)
+		      .filter(function(d) { return !d.children; });
+        
+		  var cell = svg.selectAll("g")
+		      .data(nodes)
+		    .enter().append("svg:g")
+		      .attr("class", "cell")
+		      .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
+		      .on("click", function(d) { return zoom(node == d.parent ? root : d.parent); });
+        
+		  cell.append("svg:rect")
+		      .attr("width", function(d) { return d.dx - 1; })
+		      .attr("height", function(d) { return d.dy - 1; })
+		      .style("fill", function(d) { return d.color; });
+        
+		  cell.append("svg:text")
+		      .attr("x", function(d) { return d.dx / 2; })
+		      .attr("y", function(d) { return d.dy / 2; })
+		      .attr("dy", ".35em")
+		      .attr("text-anchor", "middle")
+		      .text(function(d) { return d.name; })
+		      .style("opacity", function(d) { d.w = this.getComputedTextLength(); return d.dx > d.w ? 1 : 0; });
+        
+		  d3.select(window).on("click", function() { zoom(root); });
+        
+		  d3.select("select").on("change", function() {
+		    treemap.value(this.value == "size" ? size : count).nodes(root);
+		    zoom(node);
+		  });
+		});
+        
+		function size(d) {
+		  return d.size;
+		}
+        
+		function count(d) {
+		  return 1;
+		}
+        
+		function zoom(d) {
+		  var kx = w / d.dx, ky = h / d.dy;
+		  x.domain([d.x, d.x + d.dx]);
+		  y.domain([d.y, d.y + d.dy]);
+        
+		  var t = svg.selectAll("g.cell").transition()
+		      .duration(d3.event.altKey ? 7500 : 750)
+		      .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+        
+		  t.select("rect")
+		      .attr("width", function(d) { return kx * d.dx - 1; })
+		      .attr("height", function(d) { return ky * d.dy - 1; })
+        
+		  t.select("text")
+		      .attr("x", function(d) { return kx * d.dx / 2; })
+		      .attr("y", function(d) { return ky * d.dy / 2; })
+		      .style("opacity", function(d) { return kx * d.dx > d.w ? 1 : 0; });
+        
+		  node = d;
+		  d3.event.stopPropagation();
+		}
+	</script>
+
+    </body>
+</html>
+                 

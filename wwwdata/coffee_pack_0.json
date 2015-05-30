@@ -1,0 +1,11 @@
+{
+  "year": "2010",
+  "children":[{ "name" : "카페베네", "value":408, "color":"#A5D6D2" },
+    { "name" : "이디야", "value":300, "color":"#978F68" },
+    { "name" : "엔제리너스", "value":371, "color":"#F6E292" },
+    { "name" : "투썸플레이스", "value":129, "color":"#46928E" },
+    { "name" : "탐앤탐스", "value":265, "color":"#DD6282" },
+    { "name" : "할리스", "value":264, "color":"#AFCAD3" },
+    { "name" : "파스쿠찌", "value":107, "color":"#E29591" },
+    { "name" : "카페띠아모", "value":216, "color":"#DBDDC9" }]
+}
